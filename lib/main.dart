@@ -41,9 +41,9 @@ class _HomeState extends State<Home> {
     setState(() {
       if(_toDoController.text.isEmpty) return;
       Map<String, dynamic> newToDo = Map();
-      newToDo["title"] = _toDoController.text;
-      _toDoController.text = "";
-      newToDo["ok"] = false;
+      newToDo['title'] = _toDoController.text;
+      _toDoController.text = '';
+      newToDo['ok'] = false;
       _toDoList.add(newToDo);
       _saveData();
     });
@@ -53,8 +53,8 @@ class _HomeState extends State<Home> {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       _toDoList.sort((a, b) {
-        if (a["ok"] && !b["ok"]) return 1;
-        else if (!a["ok"] && b["ok"]) return -1;
+        if (a['ok'] && !b['ok']) return 1;
+        else if (!a['ok'] && b['ok']) return -1;
         else return 0;
       });
       _saveData();
@@ -119,15 +119,15 @@ class _HomeState extends State<Home> {
       ),
       direction: DismissDirection.startToEnd,
       child: CheckboxListTile(
-        title: Text(_toDoList[index]["title"]),
-        value: _toDoList[index]["ok"],
+        title: Text(_toDoList[index]['title']),
+        value: _toDoList[index]['ok'],
         secondary: CircleAvatar(
           child: Icon(
-              _toDoList[index]["ok"] ? Icons.check : Icons.error),
+              _toDoList[index]['ok'] ? Icons.check : Icons.error),
         ),
         onChanged: (c) {
           setState(() {
-            _toDoList[index]["ok"] = c;
+            _toDoList[index]['ok'] = c;
             _saveData();
           });
         },
@@ -139,8 +139,8 @@ class _HomeState extends State<Home> {
           _toDoList.removeAt(index);
           _saveData();
           final snack = SnackBar(
-            content: Text("Tarefa \"${_lastRemoved["title"]}\" removida."),
-            action: SnackBarAction(label: "Desfazer",
+            content: Text('Tarefa \'${_lastRemoved['title']}\' removida.'),
+            action: SnackBarAction(label: 'Desfazer',
               onPressed: (){
               setState(() {
                 _toDoList.insert(_lastRemovedPos, _lastRemoved);
@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
 
   Future<File> _getFile() async {
     final directory = await getApplicationDocumentsDirectory();
-    return File("${directory.path}/data.json");
+    return File('${directory.path}/data.json');
   }
 
   Future<File> _saveData() async {
