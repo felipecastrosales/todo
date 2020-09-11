@@ -6,8 +6,8 @@ import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
+    debugShowCheckedModeBanner: false,
+    home: Home(),
   ));
 }
 
@@ -17,15 +17,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final _toDoController = TextEditingController();
 
+  final _toDoController = TextEditingController();
   List _toDoList = [];
 
   Map<String, dynamic> _lastRemoved;
   int _lastRemovedPos;
-
-
-
 
   @override
   void initState() {
@@ -61,45 +58,67 @@ class _HomeState extends State<Home> {
     });
     return null;
   }
-  
+
+  static const _defaultColor = const Color(0xFF28DF99);
+  static const _lightColor = const Color(0xFFF9FCFB);
+  static const _textColor = const Color(0xFF333333);
+
+  final kLabelStyle = TextStyle(
+      color: _defaultColor, fontSize: 24);
+
+  final kLightLabelStyle = TextStyle(
+      color: _lightColor, fontSize: 24);
+
+  final kTextLabelStyle = TextStyle(
+      color: _textColor, fontSize: 18);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de tarefas'),
-        backgroundColor: Colors.blueAccent,
+        title: Text('ToDo List', style: kLightLabelStyle),
+        backgroundColor: _defaultColor,
         centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+            color: _lightColor,
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: TextField(
                     controller: _toDoController,
+                    style: kTextLabelStyle,
                     decoration: InputDecoration(
-                      labelText: 'Nova tarefa',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      labelText: 'Add New ToDo',
+                      labelStyle: kLabelStyle,
                     ),
                   ),
                 ),
-                RaisedButton(
-                  color: Colors.blueAccent,
-                  child: Text('ADD'),
-                  textColor: Colors.white,
-                  onPressed: _addToDo,
+                Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: IconButton(
+                    icon: Icon(
+                        Icons.playlist_add,
+                        color: _defaultColor,
+                        size: 40,
+                    ),
+                    onPressed: _addToDo,
+                  ),
                 ),
               ],
             ),
           ),
           Expanded(
-            child: RefreshIndicator(onRefresh: _refresh,
+            child: RefreshIndicator(
+              onRefresh: _refresh,
                 child: ListView.builder(
-                    padding: EdgeInsets.only(top: 10.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     itemCount: _toDoList.length,
-                    itemBuilder: buildItem),
+                    itemBuilder: buildItem
+                ),
             )
           ),
         ],
@@ -113,17 +132,22 @@ class _HomeState extends State<Home> {
       background: Container(
         color: Colors.red,
         child: Align(
-          alignment: Alignment(-0.9, 0.0),
-          child: Icon(Icons.delete, color: Colors.white),
+          alignment: Alignment(-0.95, 0.0),
+          child: Icon(Icons.delete, color: Colors.white, size: 40),
         ),
       ),
       direction: DismissDirection.startToEnd,
       child: CheckboxListTile(
-        title: Text(_toDoList[index]['title']),
+        activeColor: _defaultColor,
+        title: Text(_toDoList[index]['title'], style: kTextLabelStyle),
         value: _toDoList[index]['ok'],
         secondary: CircleAvatar(
+          backgroundColor: Colors.transparent,
           child: Icon(
-              _toDoList[index]['ok'] ? Icons.check : Icons.error),
+            _toDoList[index]['ok'] ? Icons.add : Icons.error,
+            color: _defaultColor,
+            size: 40,
+          ),
         ),
         onChanged: (c) {
           setState(() {
@@ -139,15 +163,21 @@ class _HomeState extends State<Home> {
           _toDoList.removeAt(index);
           _saveData();
           final snack = SnackBar(
-            content: Text('Tarefa \'${_lastRemoved['title']}\' removida.'),
-            action: SnackBarAction(label: 'Desfazer',
-              onPressed: (){
-              setState(() {
-                _toDoList.insert(_lastRemovedPos, _lastRemoved);
-                _saveData();
-              });
-            }),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 5),
+            backgroundColor: _defaultColor,
+            content: Text(
+              'Tarefa \'${_lastRemoved['title']}\' removida.',
+              style: kLightLabelStyle,
+            ),
+            action: SnackBarAction(
+              label: 'Desfazer',
+              textColor: _lightColor,
+              onPressed: () =>
+                  setState(() {
+                    _toDoList.insert(_lastRemovedPos, _lastRemoved);
+                    _saveData();
+                  }),
+            ),
           );
           Scaffold.of(context).removeCurrentSnackBar();
           Scaffold.of(context).showSnackBar(snack);
@@ -155,7 +185,6 @@ class _HomeState extends State<Home> {
       },
     );
   }
-  
 
   Future<File> _getFile() async {
     final directory = await getApplicationDocumentsDirectory();

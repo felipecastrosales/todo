@@ -1,14 +1,15 @@
  <p align="center">
-      <img src="https://user-images.githubusercontent.com/59374587/92790175-ecf48500-f381-11ea-8311-6d6e8f10cf8f.png" width="120px" alt="https://stories.freepik.com/work Illustration by Freepik Stories"/>
+      <img src="https://user-images.githubusercontent.com/59374587/92790175-ecf48500-f381-11ea-8311-6d6e8f10cf8f.png" width="130px" alt="https://stories.freepik.com/work Illustration by Freepik Stories"/>
    </p>
 
    <h1 align="center">ToDo</h1>
 
    <h2 align="center">About 📖</h2>
    
-   <p align="center">
+   <p align="center">   
       A simple ToDo app made with Flutter 💙.<br>
-      This application is in version 1.0.
+      With this app you can make your ToDos and organize them. You can add them, delete them (with option to undo later), and view them so that you see the ones that are pending first, and below the completed ones. It is a simple application, but it can be very useful when it comes to your organization. 😃
+      This application is in version 1.1.
    </p>
 
 ---
@@ -16,7 +17,7 @@
    <h2 align="center">Preview 📱</h2><br>
 
    <p align="center">
-   <img src="https://user-images.githubusercontent.com/59374587/92790042-cafb0280-f381-11ea-8638-01b5d79da2b3.gif">
+   <img src="https://user-images.githubusercontent.com/59374587/92949028-c2153a00-f430-11ea-958a-1af0b7463fcc.gif">
    </p>
 
    > * You can see all version previews in [`demos`](https://github.com/felipecastrosales/ToDo-Flutter/tree/master/demos) folder. 🧐📂
@@ -27,7 +28,7 @@
    Challenges and Learnings along the way 🤯
    </h2>
 
-   This application was simple to make, and I intend to make more updates to it in the future.<br>
+   This application was very simple and so was the development, but it also, due to the layout, forced me to consult documentation, articles and forums (StackOverFlow, GitHub Issues and others) several times, which made me learn even more 🤯. Foturnately, I managed to make the application more beautiful, and I intend  to make more updates in future.
 
 ---
 
