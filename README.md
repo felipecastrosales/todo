@@ -20,7 +20,7 @@
    <img src="https://user-images.githubusercontent.com/59374587/92949028-c2153a00-f430-11ea-958a-1af0b7463fcc.gif">
    </p>
 
-   > * You can see all version previews in [`demos`](https://github.com/felipecastrosales/ToDo-Flutter/tree/master/demos) folder. 🧐📂
+   > * You can see all version previews in [`demos`](https://github.com/felipecastrosales/ToDo/tree/master/demos) folder. 🧐📂
 
 ---
 
@@ -36,10 +36,10 @@
 
    ```   
    - Clone this repository:
-   $ git clone https://github.com/felipecastrosales/ToDo-Flutter
+   $ git clone https://github.com/felipecastrosales/ToDo ToDo
 
    - Enter in directory:
-   $ cd ToDo-Flutter
+   $ cd ToDo
 
    - For install dependencies:
    $ flutter packages get
@@ -52,7 +52,7 @@
 
    <h2 align="center">License 📝</h2>
 
-   This repository is under MIT license. You can see the [LICENSE](https://github.com/felipecastrosales/ToDo-Flutter/blob/master/LICENSE) file for more details. 😉
+   This repository is under MIT license. You can see the [LICENSE](https://github.com/felipecastrosales/ToDo/blob/master/LICENSE) file for more details. 😉
 
    ---
 

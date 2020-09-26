@@ -7,6 +7,9 @@ import 'package:path_provider/path_provider.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      primaryColor: const Color(0xFF28DF99),
+    ),
     home: Home(),
   ));
 }
@@ -17,7 +20,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   final _toDoController = TextEditingController();
   List _toDoList = [];
 
@@ -36,7 +38,7 @@ class _HomeState extends State<Home> {
 
   void _addToDo() {
     setState(() {
-      if(_toDoController.text.isEmpty) return;
+      if (_toDoController.text.isEmpty) return;
       Map<String, dynamic> newToDo = Map();
       newToDo['title'] = _toDoController.text;
       _toDoController.text = '';
@@ -46,13 +48,16 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<Null> _refresh() async{
+  Future<Null> _refresh() async {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       _toDoList.sort((a, b) {
-        if (a['ok'] && !b['ok']) return 1;
-        else if (!a['ok'] && b['ok']) return -1;
-        else return 0;
+        if (a['ok'] && !b['ok'])
+          return 1;
+        else if (!a['ok'] && b['ok'])
+          return -1;
+        else
+          return 0;
       });
       _saveData();
     });
@@ -63,14 +68,11 @@ class _HomeState extends State<Home> {
   static const _lightColor = const Color(0xFFF9FCFB);
   static const _textColor = const Color(0xFF333333);
 
-  final kLabelStyle = TextStyle(
-      color: _defaultColor, fontSize: 24);
+  final kLabelStyle = TextStyle(color: _defaultColor, fontSize: 24);
 
-  final kLightLabelStyle = TextStyle(
-      color: _lightColor, fontSize: 24);
+  final kLightLabelStyle = TextStyle(color: _lightColor, fontSize: 24);
 
-  final kTextLabelStyle = TextStyle(
-      color: _textColor, fontSize: 18);
+  final kTextLabelStyle = TextStyle(color: _textColor, fontSize: 18);
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +103,9 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.only(left: 12),
                   child: IconButton(
                     icon: Icon(
-                        Icons.playlist_add,
-                        color: _defaultColor,
-                        size: 40,
+                      Icons.playlist_add,
+                      color: _defaultColor,
+                      size: 36,
                     ),
                     onPressed: _addToDo,
                   ),
@@ -112,15 +114,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-            child: RefreshIndicator(
-              onRefresh: _refresh,
-                child: ListView.builder(
-                    padding: EdgeInsets.only(top: 16.0),
-                    itemCount: _toDoList.length,
-                    itemBuilder: buildItem
-                ),
-            )
-          ),
+              child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: ListView.builder(
+                padding: EdgeInsets.only(top: 16.0),
+                itemCount: _toDoList.length,
+                itemBuilder: buildItem),
+          )),
         ],
       ),
     );
@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
         color: Colors.red,
         child: Align(
           alignment: Alignment(-0.95, 0.0),
-          child: Icon(Icons.delete, color: Colors.white, size: 40),
+          child: Icon(Icons.delete, color: Colors.white, size: 36),
         ),
       ),
       direction: DismissDirection.startToEnd,
@@ -146,7 +146,7 @@ class _HomeState extends State<Home> {
           child: Icon(
             _toDoList[index]['ok'] ? Icons.add : Icons.error,
             color: _defaultColor,
-            size: 40,
+            size: 36,
           ),
         ),
         onChanged: (c) {
@@ -156,7 +156,7 @@ class _HomeState extends State<Home> {
           });
         },
       ),
-      onDismissed: (direction){
+      onDismissed: (direction) {
         setState(() {
           _lastRemoved = Map.from(_toDoList[index]);
           _lastRemovedPos = index;
@@ -172,11 +172,10 @@ class _HomeState extends State<Home> {
             action: SnackBarAction(
               label: 'Desfazer',
               textColor: _lightColor,
-              onPressed: () =>
-                  setState(() {
-                    _toDoList.insert(_lastRemovedPos, _lastRemoved);
-                    _saveData();
-                  }),
+              onPressed: () => setState(() {
+                _toDoList.insert(_lastRemovedPos, _lastRemoved);
+                _saveData();
+              }),
             ),
           );
           Scaffold.of(context).removeCurrentSnackBar();
