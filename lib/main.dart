@@ -4,15 +4,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() =>
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    home: Home(),
     theme: ThemeData(
       primaryColor: const Color(0xFF28DF99),
+      accentColor: Colors.greenAccent,
     ),
-    home: Home(),
   ));
-}
 
 class Home extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   void _addToDo() {
     setState(() {
       if (_toDoController.text.isEmpty) return;
-      Map<String, dynamic> newToDo = Map();
+      var newToDo = <String, dynamic>{};
       newToDo['title'] = _toDoController.text;
       _toDoController.text = '';
       newToDo['ok'] = false;
@@ -52,27 +52,26 @@ class _HomeState extends State<Home> {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       _toDoList.sort((a, b) {
-        if (a['ok'] && !b['ok'])
+        if (a['ok'] && !b['ok']) {
           return 1;
-        else if (!a['ok'] && b['ok'])
+        } else if (!a['ok'] && b['ok']) {
           return -1;
-        else
+        } else {
           return 0;
+        }
       });
       _saveData();
     });
     return null;
   }
 
-  static const _defaultColor = const Color(0xFF28DF99);
-  static const _lightColor = const Color(0xFFF9FCFB);
-  static const _textColor = const Color(0xFF333333);
+  static const _defaultColor = Color(0xFF28DF99);
+  static const _lightColor   = Color(0xFFF9FCFB);
+  static const _textColor    = Color(0xFF333333);
 
-  final kLabelStyle = TextStyle(color: _defaultColor, fontSize: 24);
-
+  final kLabelStyle      = TextStyle(color: _defaultColor, fontSize: 24);
   final kLightLabelStyle = TextStyle(color: _lightColor, fontSize: 24);
-
-  final kTextLabelStyle = TextStyle(color: _textColor, fontSize: 18);
+  final kTextLabelStyle  = TextStyle(color: _textColor, fontSize: 18);
 
   @override
   Widget build(BuildContext context) {
@@ -114,12 +113,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-              child: RefreshIndicator(
+            child: RefreshIndicator(
             onRefresh: _refresh,
             child: ListView.builder(
-                padding: EdgeInsets.only(top: 16.0),
-                itemCount: _toDoList.length,
-                itemBuilder: buildItem),
+              padding: EdgeInsets.only(top: 16.0),
+              itemCount: _toDoList.length,
+              itemBuilder: buildItem
+            ),
           )),
         ],
       ),
@@ -191,7 +191,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<File> _saveData() async {
-    String data = json.encode(_toDoList);
+    var data = json.encode(_toDoList);
     final file = await _getFile();
     return file.writeAsString(data);
   }
@@ -200,6 +200,7 @@ class _HomeState extends State<Home> {
     try {
       final file = await _getFile();
       return file.readAsString();
+    // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       return null;
     }
