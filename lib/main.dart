@@ -22,8 +22,8 @@ class _HomeState extends State<Home> {
   final _toDoController = TextEditingController();
   List _toDoList = [];
 
-  Map<String, dynamic> _lastRemoved;
-  int _lastRemovedPos;
+  late Map<String, dynamic> _lastRemoved;
+  late int _lastRemovedPos;
 
   Map<String, dynamic> _lastEdited;
   int _lastEditedPos;
