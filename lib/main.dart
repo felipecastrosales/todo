@@ -4,15 +4,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() =>
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Home(),
-    theme: ThemeData(
-      primaryColor: const Color(0xFF28DF99),
-      accentColor: Colors.greenAccent,
-    ),
-  ));
+void main() => runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Home(),
+        theme: ThemeData(
+          primaryColor: const Color(0xFF28DF99),
+          accentColor: Colors.greenAccent,
+        ),
+      ),
+    );
 
 class Home extends StatefulWidget {
   @override
@@ -23,8 +24,8 @@ class _HomeState extends State<Home> {
   final _toDoController = TextEditingController();
   List _toDoList = [];
 
-  Map<String, dynamic> _lastRemoved;
-  int _lastRemovedPos;
+  late Map<String, dynamic> _lastRemoved;
+  late int _lastRemovedPos;
 
   @override
   void initState() {
@@ -66,12 +67,12 @@ class _HomeState extends State<Home> {
   }
 
   static const _defaultColor = Color(0xFF28DF99);
-  static const _lightColor   = Color(0xFFF9FCFB);
-  static const _textColor    = Color(0xFF333333);
+  static const _lightColor = Color(0xFFF9FCFB);
+  static const _textColor = Color(0xFF333333);
 
-  final kLabelStyle      = TextStyle(color: _defaultColor, fontSize: 24);
+  final kLabelStyle = TextStyle(color: _defaultColor, fontSize: 24);
   final kLightLabelStyle = TextStyle(color: _lightColor, fontSize: 24);
-  final kTextLabelStyle  = TextStyle(color: _textColor, fontSize: 18);
+  final kTextLabelStyle = TextStyle(color: _textColor, fontSize: 18);
 
   @override
   Widget build(BuildContext context) {
@@ -114,13 +115,14 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
             child: RefreshIndicator(
-            onRefresh: _refresh,
-            child: ListView.builder(
-              padding: EdgeInsets.only(top: 16.0),
-              itemCount: _toDoList.length,
-              itemBuilder: buildItem
+              onRefresh: _refresh,
+              child: ListView.builder(
+                padding: EdgeInsets.only(top: 16.0),
+                itemCount: _toDoList.length,
+                itemBuilder: buildItem,
+              ),
             ),
-          )),
+          ),
         ],
       ),
     );
@@ -178,8 +180,8 @@ class _HomeState extends State<Home> {
               }),
             ),
           );
-          Scaffold.of(context).removeCurrentSnackBar();
-          Scaffold.of(context).showSnackBar(snack);
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(snack);
         });
       },
     );
@@ -197,12 +199,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<String> _readData() async {
-    try {
-      final file = await _getFile();
-      return file.readAsString();
-    // ignore: avoid_catches_without_on_clauses
-    } catch (e) {
-      return null;
-    }
+    final file = await _getFile();
+    return file.readAsString();
   }
 }
